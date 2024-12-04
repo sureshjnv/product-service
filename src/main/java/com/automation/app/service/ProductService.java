@@ -43,6 +43,16 @@ public class ProductService {
 		productDao.deleteById(id);
 		return new ResponseEntity<>("Product Deleted",HttpStatus.OK);
 	}
+
+	public ResponseEntity<Product> reduceStock(Integer id, int quantity) {
+		
+		Product product = productDao.findById(id).get();
+		Integer existingStock = product.getStock();
+		product.setStock(existingStock-quantity);
+		productDao.save(product);
+		
+		return new ResponseEntity<>(product,HttpStatus.OK);
+	}
 	
 
 }
